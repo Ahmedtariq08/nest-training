@@ -1,8 +1,22 @@
 import { Module } from '@nestjs/common';
-import { LocationModule } from './location/location.module';
-import { ConfigModule } from './config/config.module';
+import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [LocationModule, ConfigModule],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    TypeOrmModule.forRoot({
+      type: process.env.DB_TYPE as any,
+      host: process.env.PG_HOST,
+      port: parseInt(process.env.PG_PORT),
+      username: process.env.PG_USER,
+      password: process.env.PG_PASSWORD,
+      database: process.env.PG_DB,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+  ],
 })
 export class AppModule { }
