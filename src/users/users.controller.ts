@@ -1,51 +1,61 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { UserService } from './users.service';
 import { User } from './user.entity';
 
 @Controller('users')
 export class UserController {
-    constructor(private readonly usersService: UserService) { }
+  constructor(private readonly usersService: UserService) {}
 
-    //get all users
-    @Get()
-    async findAll(): Promise<User[]> {
-        return this.usersService.findAll();
-    }
+  //get all users
+  @Get()
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
 
-    //get user by id
-    @Get(':id')
-    async findOne(@Param('id') id: number): Promise<User> {
-        if (!id) {
-            throw new BadRequestException('Kindly provide a valid ID');
-        }
-        const user = await this.usersService.findOne(id);
-        if (!user) {
-            throw new NotFoundException('User does not exist!');
-        } else {
-            return user;
-        }
+  //get user by id
+  @Get(':id')
+  async findOne(@Param('id') id: number): Promise<User> {
+    if (!id) {
+      throw new BadRequestException('Kindly provide a valid ID');
     }
+    const user = await this.usersService.findOne(id);
+    if (!user) {
+      throw new NotFoundException('User does not exist!');
+    } else {
+      return user;
+    }
+  }
 
-    //create user
-    @Post()
-    async create(@Body() user: User): Promise<User> {
-        return this.usersService.create(user);
-    }
+  //create user
+  @Post()
+  async create(@Body() user: User): Promise<User> {
+    return this.usersService.create(user);
+  }
 
-    //update user
-    @Put(':id')
-    async update(@Param('id') id: number, @Body() user: User): Promise<any> {
-        return this.usersService.update(id, user);
-    }
+  //update user
+  @Put(':id')
+  async update(@Param('id') id: number, @Body() user: User): Promise<any> {
+    return this.usersService.update(id, user);
+  }
 
-    //delete user
-    @Delete(':id')
-    async delete(@Param('id') id: number): Promise<any> {
-        //handle error if user does not exist
-        const user = await this.usersService.findOne(id);
-        if (!user) {
-            throw new NotFoundException('User does not exist!');
-        }
-        return this.usersService.delete(id);
+  //delete user
+  @Delete(':id')
+  async delete(@Param('id') id: number): Promise<any> {
+    //handle error if user does not exist
+    const user = await this.usersService.findOne(id);
+    if (!user) {
+      throw new NotFoundException('User does not exist!');
     }
+    return this.usersService.delete(id);
+  }
 }

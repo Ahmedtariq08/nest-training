@@ -27,8 +27,8 @@ import { AtGaurd } from './common/gaurds';
   providers: [
     {
       provide: APP_GUARD,
-      useClass: AtGaurd
-    }
-  ]
+      useClass: AtGaurd,
+    },
+  ],
 })
-export class AppModule { }
+export class AppModule {}
