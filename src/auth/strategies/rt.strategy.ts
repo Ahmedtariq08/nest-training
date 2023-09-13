@@ -7,7 +7,7 @@ import { Injectable } from "@nestjs/common";
 export class RtStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     constructor() {
         super({
-            jwtFromRequests: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             // ignoreExpiration: false,
             secretOrKey: 'rt-secret',
             passReqToCallback: true
