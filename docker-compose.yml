@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    image: postgres:12
+    ports:
+      - 7200:7200
+    environment:
+      POSTGRES_USER: ahmed
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: nest_app

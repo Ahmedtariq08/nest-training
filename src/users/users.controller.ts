@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException, BadRequestException } from '@nestjs/common';
 import { UserService } from './users.service';
 import { User } from './user.entity';
 
@@ -15,6 +15,9 @@ export class UserController {
     //get user by id
     @Get(':id')
     async findOne(@Param('id') id: number): Promise<User> {
+        if (!id) {
+            throw new BadRequestException('Kindly provide a valid ID');
+        }
         const user = await this.usersService.findOne(id);
         if (!user) {
             throw new NotFoundException('User does not exist!');
